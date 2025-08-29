@@ -24,3 +24,25 @@ def get_db():
         yield db
     finally:
         db.close()
+
+class NoteRepository:
+
+    @staticmethod
+    def get_notes_by_user(user_id:str)->List[Note]:
+        db=SessionLocal()
+        try:
+            return db.query(Note).filter(Note.user_id==user_id).all()
+        finally:
+            db.close()
+
+    @staticmethod
+    def create_note(user_id:str, content:str)->Note:
+        db=SessionLocal()
+        try:
+            note=Note(user_id=user_id,content=content)
+            db.add(note)
+            db.commit()
+            db.refresh(note)
+            return note
+        finally:
+            db.close()
