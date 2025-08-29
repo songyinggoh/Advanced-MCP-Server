@@ -22,14 +22,17 @@ mcp=FastMCP(name="Notes App")
 @mcp.tool()
 def get_my_notes()->str:
     """Get all notes for user"""
-    return "No notes"
+    access_token:AccessToken=get_access_token()
+    user_id=access_token.user_id
+
+    return f"added note:{content}"
 
 @mcp.tool()
 def add_note(content:str)->str:
     """Add a note for user"""
     return f"added note: {content}"
 
-@mcp.custom_route(path:"/.well-known/oauth-protected-resource", methods=["GET","OPTIONS"])
+@mcp.custom_route(path="/.well-known/oauth-protected-resource", methods=["GET","OPTIONS"])
 def oauth_metadata(request:StarletteRequest)->JSONResponse:
     base_url=str(request.base_url).rstrip("/")
 
