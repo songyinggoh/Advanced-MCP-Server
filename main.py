@@ -29,6 +29,17 @@ def add_note(content:str)->str:
     """Add a note for user"""
     return f"added note: {content}"
 
+@mcp.custom_route(path:"/.well-known/oauth-protected-resource", methods=["GET","OPTIONS"])
+def oauth_metadata(request:StarletteRequest)->JSONResponse:
+    base_url=str(request.base_url).rstrip("/")
+
+    return JSONResponse(
+        {
+            "resource":base_url,
+            "authorization_servers":[os.getenv("STYTCH_DOMAIN")]
+        }
+    )
+
 if __name__=="__main__":
     mcp.run(
         transport="http",
