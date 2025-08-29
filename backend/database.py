@@ -14,3 +14,13 @@ class Note(Base):
     id=Column(Integer, primary_key=True, index=True)
     user_id=Column(String, nullable=False, index=True)
     content=Column(Text, nullable=False)
+
+
+Base.metadata.create_all(bind=engine)
+
+def get_db():
+    db=SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
