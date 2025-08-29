@@ -36,7 +36,11 @@ def oauth_metadata(request:StarletteRequest)->JSONResponse:
     return JSONResponse(
         {
             "resource":base_url,
-            "authorization_servers":[os.getenv("STYTCH_DOMAIN")]
+            #tells MCP client location of auth server
+            "authorization_servers":[os.getenv("STYTCH_DOMAIN")],
+            "scopes_supported":["read","write"],
+            #auth token is either in the head or body of request
+            "bearer_methods_supported":["header","body"]
         }
     )
 
