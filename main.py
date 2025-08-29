@@ -11,9 +11,9 @@ import os
 load_dotenv()
 
 auth=BearerAuthProvider(
-    jwks_uri=f"{os.getenv('STYTCH_DOMAIN')}/.well-known/jwks.json"
+    jwks_uri=f"{os.getenv('STYTCH_DOMAIN')}/.well-known/jwks.json",
     issuer=os.getenv("STYTCH_DOMAIN"),
-    algoritm="RS256",
+    algorithm="RS256",
     audience=os.getenv("STYTCH_PROJECT_ID"),
 )
 
